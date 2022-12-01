@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  app:
+    image: pspc/fablab-back:latest
+    env_file:
+      - .env
+    ports:
+      - "80:8000"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.9"
+          memory: 2048M
+      update_config:
+        parallelism: 4
+        order: start-first
+        failure_action: rollback
+        delay: 10s
+      rollback_config:
+        parallelism: 0
+        order: stop-first
